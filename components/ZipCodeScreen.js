@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, FlatList, TouchableHighlight } from 'react-native';
+import { View, Text, FlatList, TouchableHighlight, StyleSheet, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const availableZipItems = [
@@ -9,11 +9,13 @@ const availableZipItems = [
     { place: 'Chiangmai', code: '50000' },
     { place: 'Khonkaen', code: '40000' },
     { place: 'Chonburi', code: '20000' },
+    { place: 'Phatthalung', code: '93000' },
+    { place: 'Phuket', code: '83000'}
 ]
 
 const ZipItem = ({ place, code, navigation }) => (
-    <TouchableHighlight onPress={() => navigation.navigate('Weather', { zipCode: code })}>
-        <View style={{ borderColor: 'red', borderWidth: 3 }}>
+    <TouchableHighlight activeOpacity={0.8} underlayColor='#00D3FF' onPress={() => navigation.navigate('Weather', { zipCode: code })}>
+        <View style={styles.fiex}>
             <Text>{place}</Text>
             <Text>{code}</Text>
         </View>
@@ -26,14 +28,39 @@ export default function ZipCodeScreen() {
     const navigation = useNavigation()
     return (
         <View>
-            <FlatList>
+            <ImageBackground source={require('../2.jpg')} style={styles.backdrop}>
+            <FlatList 
                 data={availableZipItems}
                 keyExtractor={_keyExtractor}
                 renderItem={({ item }) => <ZipItem {...item} navigation={navigation} />}
-                </FlatList>
+                />
             <StatusBar style="auto" />
+            </ImageBackground>
         </View>
      );
-
 }
+
+const styles = StyleSheet.create({
+    fiex:{
+        display: 'flex',    
+        flexDirection: 'row', 
+        justifyContent: 'space-between',
+        paddingLeft: 20,
+        paddingRight:20,
+        margin:30
+    },
+    medium: {
+        marginTop: 32,
+        fontSize: 30,
+        color: '#6633FF' ,
+        flexDirection: 'row',
+        textAlign: 'center',
+        
+    },
+    bro: {
+        width: '100%',
+        height: '100%'
+    }
+    
+})
     
